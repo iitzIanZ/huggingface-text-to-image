@@ -134,35 +134,21 @@ with gr.Blocks(css=css) as demo:
                 )
 
         gr.Examples(examples=examples, inputs=[prompt])
-        run_button.click(
-            fn=infer,
-            inputs=[
-                prompt,
-                negative_prompt,
-                seed,
-                randomize_seed,
-                width,
-                height,
-                guidance_scale,
-                num_inference_steps,
-            ],
-            outputs=[result, seed],
-        )
-        
-        prompt.submit(
-            fn=infer,
-            inputs=[
-                prompt,
-                negative_prompt,
-                seed,
-                randomize_seed,
-                width,
-                height,
-                guidance_scale,
-                num_inference_steps,
-            ],
-            outputs=[result, seed],
-        )
+    gr.on(
+        triggers=[run_button.click, prompt.submit],
+        fn=infer,
+        inputs=[
+            prompt,
+            negative_prompt,
+            seed,
+            randomize_seed,
+            width,
+            height,
+            guidance_scale,
+            num_inference_steps,
+        ],
+        outputs=[result, seed],
+    )
 
 if __name__ == "__main__":
     demo.launch()
